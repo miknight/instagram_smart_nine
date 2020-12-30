@@ -8,7 +8,7 @@ requires = ['pytz==2020.5',
             'scipy==1.5.4']
 
 setup(name='smart-nine',
-      version='0.0.1',
+      version='0.0.2',
       description=("smart-nine is a command-line application written in Python"
                  " that generates an Instagram user's top nine photograph collage. Use responsibly."),
       url='https://github.com/ulysseslizarraga/instagram_smart_nine',

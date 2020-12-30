@@ -3,6 +3,7 @@ import os
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
+from . import constants
 
 class Graphics():
     """
@@ -10,7 +11,8 @@ class Graphics():
     """
 
     def __init__(self):
-        pass
+        self.output_dir = os.getcwd()+f"/{constants.OUTPUT_FOLDER}/"
+        os.mkdir(self.output_dir)
 
     def crop_center(self, pil_img, crop_width, crop_height):
         """
@@ -36,7 +38,7 @@ class Graphics():
         """
         plt.plot(ts_list, like_list)
         plt.scatter(ts_peak, like_peak, color='red')
-        plt.savefig(os.getcwd()+"/output_images/"+username.replace(".",""))
+        plt.savefig(self.output_dir+username.replace(".",""))
         plt.close()
 
     def generate_image_matrix(self, username, filename_peak):
@@ -55,5 +57,5 @@ class Graphics():
 
         image_matrix=np.vstack([hor1,hor2,hor3])
 
-        cv2.imwrite(os.getcwd()+"/output_images/"+username.replace(".","")+".jpg", image_matrix)
+        cv2.imwrite(self.output_dir+username.replace(".","")+".jpg", image_matrix)
 

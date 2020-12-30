@@ -3,6 +3,7 @@ import argparse
 import textwrap
 import datetime
 from . import smart_nine_gen as sn
+from . import constants
 
 def parse_bool(bool_str, parser, argument):
     """
@@ -18,6 +19,46 @@ def parse_bool(bool_str, parser, argument):
         parser.print_help()
         raise argparse.ArgumentTypeError(f'Boolean value expected for ({argument}).')
 
+def run_app(usernames,
+            scrapper_user=None,
+            password=None,
+            tz=constants.TIMEZONE,
+            year=constants.MIN_YEAR,
+            scrape=constants.SCRAPE,
+            parser=None):
+    """
+    Run to generate smart nine photograph collage
+    """
+    if not usernames:
+        if parser is not None:
+            parser.print_help()
+        raise ValueError('Must provide username(s) OR a file containing a list of username(s) OR pass --followings-input')
+
+    if (scrapper_user is None and password is None):
+        if parser is not None:
+            parser.print_help()
+        raise ValueError('Must provide login user AND password')
+
+    if (scrapper_user and password is None) or (scrapper_user is None and password):
+        if parser is not None:
+            parser.print_help()
+        raise ValueError('Must provide login user AND password')
+
+    if year < constants.MIN_YEAR:
+        if parser is not None:
+            parser.print_help()
+        raise ValueError('Year must be greater than 2000')
+
+    scrape = parse_bool(scrape, parser, "--scrape, -s")
+
+    smart = sn.SmartNineGen(usernames=usernames,
+                            scrapper_user=scrapper_user,
+                            password=password,
+                            tz=tz,
+                            year=year)
+
+    smart.smart_nine_gen(scrape_flag=scrape)
+
 def main():
     parser = argparse.ArgumentParser(
         description="smart-nine generates an instagram user's smart top 9 photograph collage",
@@ -29,35 +70,17 @@ def main():
     parser.add_argument('--login-user', '--login_user', '-u', default=None, help='Instagram scrapper login user')
     parser.add_argument('--login-pass', '--login_pass', '-p', default=None, help='Instagram scrapper login password')
     parser.add_argument('--year', '-y', type=int, default=default_year, help='Year for the top 9.')
-    parser.add_argument('--timezone', '-t', type=str, default="America/Los_Angeles", help='Timezone of Instagram user(s)')
-    parser.add_argument('--scrape', '-s', default=True, help='Data scrapping flag - set to False to work with local data.')
+    parser.add_argument('--timezone', '-t', type=str, default=constants.TIMEZONE, help='Timezone of Instagram user(s)')
+    parser.add_argument('--scrape', '-s', default=constants.SCRAPE, help='Data scrapping flag - set to False to work with local data.')
     args = parser.parse_args()
 
-    if not args.username:
-        parser.print_help()
-        raise ValueError('Must provide username(s) OR a file containing a list of username(s) OR pass --followings-input')
-
-    if (args.login_user is None and args.login_pass is None):
-        parser.print_help()
-        raise ValueError('Must provide login user AND password')
-
-    if (args.login_user and args.login_pass is None) or (args.login_user is None and args.login_pass):
-        parser.print_help()
-        raise ValueError('Must provide login user AND password')
-
-    if args.year < 2000:
-        parser.print_help()
-        raise ValueError('Year must be greater than 2000')
-
-    args.scrape = parse_bool(args.scrape, parser, "--scrape, -s")
-
-    smart = sn.SmartNineGen(usernames=args.username,
-                            scrapper_user=args.login_user,
-                            password=args.login_pass,
-                            tz=args.timezone,
-                            year=args.year)
-
-    smart.smart_nine_gen(scrape_flag=args.scrape)
+    run_app(usernames=args.username,
+            scrapper_user=args.login_user,
+            password=args.login_pass,
+            tz=args.timezone,
+            year=args.year,
+            scrape=args.scrape,
+            parser=parser)
 
 if __name__ == '__main__':
     print("Running main.")
