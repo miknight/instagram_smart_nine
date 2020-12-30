@@ -127,7 +127,5 @@ config/
 
 devops_tasks/config.json
 *.bat
-*.json
 
-/localsource
-/output_images
+/smart_nine_output
