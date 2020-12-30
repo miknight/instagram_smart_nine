@@ -2,7 +2,7 @@ import json
 import argparse
 import textwrap
 import datetime
-import smart_nine as sn
+from . import smart_nine_gen as sn
 
 def parse_bool(bool_str, parser, argument):
     """
@@ -37,6 +37,10 @@ def main():
         parser.print_help()
         raise ValueError('Must provide username(s) OR a file containing a list of username(s) OR pass --followings-input')
 
+    if (args.login_user is None and args.login_pass is None):
+        parser.print_help()
+        raise ValueError('Must provide login user AND password')
+
     if (args.login_user and args.login_pass is None) or (args.login_user is None and args.login_pass):
         parser.print_help()
         raise ValueError('Must provide login user AND password')
@@ -47,13 +51,13 @@ def main():
 
     args.scrape = parse_bool(args.scrape, parser, "--scrape, -s")
 
-    smart = sn.SmartNine(usernames=args.username,
-                         scrapper_user=args.login_user,
-                         password=args.login_pass,
-                         tz=args.timezone,
-                         year=args.year)
+    smart = sn.SmartNineGen(usernames=args.username,
+                            scrapper_user=args.login_user,
+                            password=args.login_pass,
+                            tz=args.timezone,
+                            year=args.year)
 
-    smart.smart_nine(scrape_flag=args.scrape)
+    smart.smart_nine_gen(scrape_flag=args.scrape)
 
 if __name__ == '__main__':
     print("Running main.")

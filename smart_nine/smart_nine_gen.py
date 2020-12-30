@@ -3,10 +3,10 @@ import json
 import time
 from datetime import datetime
 from pytz import timezone
-import scrapper, graphics
-import metrics_analytics as ma
+from . import scrapper, graphics
+from . import metrics_analytics as ma
 
-class SmartNine():
+class SmartNineGen():
     """
     Use to generate a good instagram top nine
     """
@@ -35,7 +35,7 @@ class SmartNine():
         jpg = url.split("?")[0].split("/")[-1]
         return jpg
 
-    def smart_nine(self, scrape_flag = True):
+    def smart_nine_gen(self, scrape_flag = True):
         """
         Generates a smart instagram top nine image
         """

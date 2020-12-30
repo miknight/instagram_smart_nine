@@ -1,4 +1,4 @@
-import constants
+from . import constants
 from scipy.signal import find_peaks
 
 class MetricsAnalytics():
