@@ -1,4 +1,7 @@
 # Instagram Smart Nine
+
+[![PyPI](https://img.shields.io/badge/pipy-v0.0.4-blue)](https://pypi.org/project/smart-nine/)
+
 smart-nine is a command-line application written in Python that generates an Instagram user's smart nine photograph collage from a particular year.
 
 Example collage:

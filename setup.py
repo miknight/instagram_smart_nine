@@ -1,3 +1,4 @@
+import os
 from setuptools import setup, find_packages
 
 requires = ['pytz==2020.5',
@@ -7,10 +8,17 @@ requires = ['pytz==2020.5',
             'numpy==1.19.4',
             'scipy==1.5.4']
 
+
+this_directory = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(this_directory, 'README.md')) as f:
+    long_description = f.read()
+
 setup(name='smart-nine',
-      version='0.0.2',
+      version='0.0.4',
       description=("smart-nine is a command-line application written in Python"
                  " that generates an Instagram user's top nine photograph collage. Use responsibly."),
+      long_description=long_description,
+      long_description_content_type='text/markdown',
       url='https://github.com/ulysseslizarraga/instagram_smart_nine',
       author='Ulysses Lizarraga',
       author_email='ulises.lizarraga@gmail.com',
