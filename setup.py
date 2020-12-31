@@ -2,19 +2,18 @@ import os
 from setuptools import setup, find_packages
 
 requires = ['pytz==2020.5',
-            'opencv-python==4.4.0.46',
             'instagram-scraper==1.9.1',
+            'numpy==1.19.3',
             'matplotlib==3.3.3',
-            'numpy==1.19.4',
-            'scipy==1.5.4']
-
+            'scipy==1.5.4',
+            'opencv-python-headless==4.4.0.46']
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(this_directory, 'README.md')) as f:
     long_description = f.read()
 
 setup(name='smart-nine',
-      version='0.0.4',
+      version='0.0.5',
       description=("smart-nine is a command-line application written in Python"
                  " that generates an Instagram user's top nine photograph collage. Use responsibly."),
       long_description=long_description,
