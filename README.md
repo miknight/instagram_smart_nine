@@ -23,6 +23,8 @@ $ smart-nine <username> -u <your username> -p <your password>
 
 *NOTE: To generate a smart-nine collage for a `<username>` which media is set to private, `<your username>` must be an approved follower of `<username>`.*
 
+The resulting collage will be saved as: `/smart-nine-output/<username>_<year>.jpg`
+
 ## Options
 |Argument| Description|
 |--|--|
