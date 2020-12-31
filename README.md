@@ -29,11 +29,11 @@ The resulting collage will be saved as: `/smart-nine-output/<username>_<year>.jp
 |Argument| Description|
 |--|--|
 |--help, -h| Show help message and exit.|
-|--login-user, -login_user, -u| Instagram scrapper login user.|
-|--login-pass, -login_pass, -p| Instagram scrapper login password.|
+|--login-user, -login_user, -u| Instagram scraper login user.|
+|--login-pass, -login_pass, -p| Instagram scraper login password.|
 |--year, -y| Year to use as filter for the smart nine collage.|
 |--timezone, -t| Timezone of Instagram user(s).|
-|--scrape, -s| Data scrapping flag - set to False to work with local data.|
+|--scrape, -s| Data scraping flag - set to False to work with local data.|
 
 ## Motivation
 The current software applications for generating Instagram year photo collages suffer from the following:
