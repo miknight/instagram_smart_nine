@@ -26,18 +26,18 @@ $ smart-nine <username> -u <your username> -p <your password>
 ## Options
 |Argument| Description|
 |--|--|
-|--help -h| Show help message and exit.|
-|--login-user -login_user -u| Instagram scrapper login user.|
-|--login-pass -login_pass -p| Instagram scrapper login password.|
-|--year -y| Year to use as filter for the smart nine collage.|
-|--timezone -t| Timezone of Instagram user(s).|
-|--scrape -s| Data scrapping flag - set to False to work with local data.|
+|--help, -h| Show help message and exit.|
+|--login-user, -login_user, -u| Instagram scrapper login user.|
+|--login-pass, -login_pass, -p| Instagram scrapper login password.|
+|--year, -y| Year to use as filter for the smart nine collage.|
+|--timezone, -t| Timezone of Instagram user(s).|
+|--scrape, -s| Data scrapping flag - set to False to work with local data.|
 
 ## Motivation
 The current software applications for generating Instagram year photo collages suffer from the following:
 
 - They only display the 9 photographs that have the most likes.
-- They require you to enter your personal email (which use to send spam), or...
+- They require you to enter your personal email (which they use to send spam), or...
 - They overlay unwanted graphics on top of the resulting image.
 
 ## License
