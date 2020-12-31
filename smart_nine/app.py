@@ -19,6 +19,11 @@ def parse_bool(bool_str, parser, argument):
         parser.print_help()
         raise argparse.ArgumentTypeError(f'Boolean value expected for ({argument}).')
 
+def parse_year(year):
+    """
+    Parses year to integer
+    """
+
 def run_app(usernames,
             scrapper_user=None,
             password=None,

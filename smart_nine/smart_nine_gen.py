@@ -15,8 +15,10 @@ class SmartNineGen():
         self.tz = timezone(tz)
         self.scrapper = scrapper.IGScrapper(scrapper_user, password)
         self.metrics = ma.MetricsAnalytics()
-        self.graphics = graphics.Graphics()
         self.year = year
+        self.upper_ts = datetime.strptime(f"{year+1}-01-01T00:00:00", "%Y-%m-%dT%H:%M:%S")
+        self.lower_ts = datetime.strptime(f"{year}-01-01T00:00:00", "%Y-%m-%dT%H:%M:%S")
+        self.graphics = graphics.Graphics(self.lower_ts, self.upper_ts)
 
     def handle_usernames(self, usernames):
         """
@@ -50,7 +52,12 @@ class SmartNineGen():
                                                                                  username,
                                                                                  self.year)
             
-            self.graphics.graph_trendline(username+f"_{self.year}", ts_list, like_list, ts_peak, like_peak)
+            self.graphics.graph_trendline(username+f"_{self.year}",
+                                          ts_list,
+                                          like_list,
+                                          ts_peak,
+                                          like_peak,
+                                          self.year)
             self.graphics.generate_image_matrix(username+f"_{self.year}", filename_peak)
 
     def filter_content(self, username, year):
@@ -68,10 +75,10 @@ class SmartNineGen():
         ts_list = []
         like_list = []
         filename_list = []
-        upper_ts = time.mktime(datetime.strptime(f"{year+1}-01-01T00:00:00", "%Y-%m-%dT%H:%M:%S").timetuple())
-        lower_ts = time.mktime(datetime.strptime(f"{year}-01-01T00:00:00", "%Y-%m-%dT%H:%M:%S").timetuple())
+        upper_ts = time.mktime(self.upper_ts.timetuple())
+        lower_ts = time.mktime(self.lower_ts.timetuple())
 
-        print(f"Began filtering for {year}...")
+        print(f"Began filtering for year: {year}...")
         for post in config_dict["GraphImages"]:
             ts = datetime.fromtimestamp(post['taken_at_timestamp'], self.tz).isoformat()
 
