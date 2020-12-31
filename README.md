@@ -3,7 +3,9 @@ smart-nine is a command-line application written in Python that generates an Ins
 
 Example collage:
 
-![bodegadude](.attachments/bodegadude_2019.jpg)
+<p align="center">
+<img src="https://images.squarespace-cdn.com/content/5928b76015cf7dec0ac75521/1609380944062-197ANESF9YH2QL3RIFIM/bodegadude_2019.jpg?format=1500w&content-type=image%2Fjpeg"/>
+</p>
 
 ## Install
 
