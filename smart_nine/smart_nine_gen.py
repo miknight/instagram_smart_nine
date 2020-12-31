@@ -61,7 +61,7 @@ class SmartNineGen():
         meta_data_path = str(os.getcwd()) +f"/{username}/{username}.json"
 
         if os.path.isfile(meta_data_path):
-            config_dict = json.load(open(meta_data_path))
+            config_dict = json.load(open(meta_data_path, encoding="utf-8"))
         else:
             raise ValueError(f"Unable to find metadata for Intagram user: @{username}. Enable scrapping.")
 

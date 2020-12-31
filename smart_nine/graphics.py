@@ -12,7 +12,8 @@ class Graphics():
 
     def __init__(self):
         self.output_dir = os.getcwd()+f"/{constants.OUTPUT_FOLDER}/"
-        os.mkdir(self.output_dir)
+        if not os.path.exists(self.output_dir):
+            os.mkdir(self.output_dir)
 
     def crop_center(self, pil_img, crop_width, crop_height):
         """
