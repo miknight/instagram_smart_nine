@@ -19,10 +19,24 @@ def parse_bool(bool_str, parser, argument):
         parser.print_help()
         raise argparse.ArgumentTypeError(f'Boolean value expected for ({argument}).')
 
-def parse_year(year):
+def parse_year(year, parser):
     """
     Parses year to integer
     """
+    if isinstance(year, int):
+        if year < constants.MIN_YEAR:
+            if parser is not None:
+                parser.print_help()
+            raise ValueError('Year must be greater than 2000')
+        return year
+    elif isinstance(year, str):
+        if year.lower() == "all":
+            return year
+        else:
+            raise ValueError('Incorrect String option for (--year/-y), try: "All"')
+    else:
+        raise ValueError('(--year/-y) Year must be either String or Integer')
+
 
 def run_app(usernames,
             scrapper_user=None,
@@ -49,12 +63,8 @@ def run_app(usernames,
             parser.print_help()
         raise ValueError('Must provide login user AND password')
 
-    if year < constants.MIN_YEAR:
-        if parser is not None:
-            parser.print_help()
-        raise ValueError('Year must be greater than 2000')
-
     scrape = parse_bool(scrape, parser, "--scrape, -s")
+    year = parse_year(year, parser)
 
     smart = sn.SmartNineGen(usernames=usernames,
                             scrapper_user=scrapper_user,
@@ -63,6 +73,7 @@ def run_app(usernames,
                             year=year)
 
     smart.smart_nine_gen(scrape_flag=scrape)
+    return "Success"
 
 def main():
     parser = argparse.ArgumentParser(
@@ -74,7 +85,7 @@ def main():
     parser.add_argument('username', help='Instagram user(s) to generate a top 9', nargs='*')
     parser.add_argument('--login-user', '--login_user', '-u', default=None, help='Instagram scrapper login user')
     parser.add_argument('--login-pass', '--login_pass', '-p', default=None, help='Instagram scrapper login password')
-    parser.add_argument('--year', '-y', type=int, default=default_year, help='Year for the top 9.')
+    parser.add_argument('--year', '-y', default=default_year, help='Year for the top 9.')
     parser.add_argument('--timezone', '-t', type=str, default=constants.TIMEZONE, help='Timezone of Instagram user(s)')
     parser.add_argument('--scrape', '-s', default=constants.SCRAPE, help='Data scrapping flag - set to False to work with local data.')
     args = parser.parse_args()

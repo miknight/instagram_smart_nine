@@ -129,3 +129,4 @@ devops_tasks/config.json
 *.bat
 
 /smart_nine_output
+/tests/smart_nine_output

@@ -3,6 +3,7 @@ import json
 import time
 from datetime import datetime
 from pytz import timezone
+import pytz
 from . import scrapper, graphics
 from . import metrics_analytics as ma
 
@@ -16,9 +17,16 @@ class SmartNineGen():
         self.scrapper = scrapper.IGScrapper(scrapper_user, password)
         self.metrics = ma.MetricsAnalytics()
         self.year = year
-        self.upper_ts = datetime.strptime(f"{year+1}-01-01T00:00:00", "%Y-%m-%dT%H:%M:%S")
-        self.lower_ts = datetime.strptime(f"{year}-01-01T00:00:00", "%Y-%m-%dT%H:%M:%S")
-        self.graphics = graphics.Graphics(self.lower_ts, self.upper_ts)
+
+        if self.year == "All":
+            self.upper_ts = datetime.now(self.tz)
+            self.lower_ts = datetime.strptime(f"2000-01-01T00:00:00", "%Y-%m-%dT%H:%M:%S")
+        else:
+            self.upper_ts = datetime.strptime(f"{year+1}-01-01T00:00:00", "%Y-%m-%dT%H:%M:%S")
+            self.lower_ts = datetime.strptime(f"{year}-01-01T00:00:00", "%Y-%m-%dT%H:%M:%S")
+            self.upper_ts = self.tz.localize(self.upper_ts)
+            self.lower_ts = self.tz.localize(self.lower_ts)
+        self.graphics = graphics.Graphics()
 
     def handle_usernames(self, usernames):
         """
@@ -57,7 +65,9 @@ class SmartNineGen():
                                           like_list,
                                           ts_peak,
                                           like_peak,
-                                          self.year)
+                                          self.year,
+                                          self.lower_ts,
+                                          self.upper_ts)
             self.graphics.generate_image_matrix(username+f"_{self.year}", filename_peak)
 
     def filter_content(self, username, year):
@@ -80,7 +90,7 @@ class SmartNineGen():
 
         print(f"Began filtering for year: {year}...")
         for post in config_dict["GraphImages"]:
-            ts = datetime.fromtimestamp(post['taken_at_timestamp'], self.tz).isoformat()
+            ts = datetime.fromtimestamp(post['taken_at_timestamp'], self.tz) #.isoformat()
 
             if post['taken_at_timestamp'] > upper_ts:
                 continue
@@ -97,6 +107,9 @@ class SmartNineGen():
             ts_list.append(ts)
             like_list.append(likes)
             filename_list.append(filename)
+
+        if self.year == "All":
+            self.lower_ts = ts
     
         return ts_list, like_list, filename_list
         
