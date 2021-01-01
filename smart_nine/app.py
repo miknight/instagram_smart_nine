@@ -23,6 +23,11 @@ def parse_year(year, parser):
     """
     Parses year to integer
     """
+    try:
+        year = int(year)
+    except:
+        print("Warning: unable to parse year as Integer.")
+
     if isinstance(year, int):
         if year < constants.MIN_YEAR:
             if parser is not None:

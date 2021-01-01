@@ -15,7 +15,7 @@ with open(os.path.join(this_directory, 'README.md')) as f:
     long_description = f.read()
 
 setup(name='smart-nine',
-      version='0.0.8',
+      version='0.0.9',
       description=("smart-nine is a command-line application written in Python"
                  " that generates an Instagram user's top nine photograph collage. Use responsibly."),
       long_description=long_description,
